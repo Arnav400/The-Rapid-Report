@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto p-6 relative">
+        <div class="absolute top-4 right-6 text-sm">
+            <a href="https://github.com/Arnav400" target="_blank" class="text-blue-400 hover:underline mr-4">GitHub</a>
+            <a href="https://www.linkedin.com/in/arnav-sen-085484289/" target="_blank" class="text-blue-400 hover:underline">LinkedIn</a>
+        </div>
+        <h1 class="text-4xl font-extrabold text-center mb-8 text-blue-400">Latest News</h1>
+        <div id="news-container" class="grid md:grid-cols-3 gap-6"></div>
+        <p class="text-center text-gray-500 mt-8">Made with fun by Arnav</p>
+    </div>
+
+    <script>
+        const API_KEY = '5ef3abc0a6fa4cbfb77ed74f309c825e';
+        const NEWS_API_URL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
+
+        async function fetchNews() {
+            try {
+                const response = await fetch(NEWS_API_URL);
+                const data = await response.json();
+                displayNews(data.articles);
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        }
+
+        function displayNews(articles) {
+            const newsContainer = document.getElementById('news-container');
+            newsContainer.innerHTML = '';
+
+            articles.forEach(article => {
+                const newsCard = document.createElement('div');
+                newsCard.className = 'bg-gray-800 p-5 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300';
+                newsCard.innerHTML = `
+                    <img src="${article.urlToImage || 'https://via.placeholder.com/400'}" class="w-full h-52 object-cover rounded-md" alt="News Image">
+                    <h2 class="text-xl font-bold mt-4 text-blue-300">${article.title}</h2>
+                    <p class="text-gray-400 mt-2">${article.description || 'No description available.'}</p>
+                    <a href="${article.url}" class="text-blue-500 mt-4 inline-block font-medium hover:underline" target="_blank">Read More</a>
+                `;
+                newsContainer.appendChild(newsCard);
+            });
+        }
+
+        fetchNews();
+    </script>
+</body>
+</html>
