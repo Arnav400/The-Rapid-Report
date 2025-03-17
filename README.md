@@ -1,4 +1,4 @@
-#The Rapid Report
+# The Rapid Report
 
 A simple and responsive news website that fetches and displays the latest headlines using the News API. The website is styled with Tailwind CSS and includes smooth hover effects for an enhanced user experience.
 
